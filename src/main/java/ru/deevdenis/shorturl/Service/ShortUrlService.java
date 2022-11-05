@@ -20,14 +20,13 @@ public class ShortUrlService {
     private ShortUrlDTO template;
 
     public ShortUrl save(@NonNull ShortUrl message, Long timeExpired) {
-        if (timeExpired == null) timeExpired = 60_000L;
 
         ShortUrl newMessage = ShortUrl.builder()
                 .id(message.getId())
                 .text(message.getText())
                 .shortUrl(UUID.randomUUID().toString().substring(0, 15).replace("-", ""))
                 .timeRegistration(Instant.now())
-                .timeExpired(Instant.now().plusMillis(timeExpired))
+                .timeExpired(timeExpired == null ? null : Instant.now().plusMillis(timeExpired))
                 .role(message.getRole())
                 .build();
 

@@ -9,7 +9,7 @@ import java.util.List;
 public interface ShortUrlDTO extends MongoRepository<ShortUrl, String> {
     ShortUrl findByShortUrl(String shortUrl);
 
-    void deleteAllByTimeExpiredBefore(Instant time);
+    List<ShortUrl> findByTimeExpiredBefore(Instant time);
 
-    List<ShortUrl> findByT
+    void deleteAll(List<ShortUrl> list);
 }
