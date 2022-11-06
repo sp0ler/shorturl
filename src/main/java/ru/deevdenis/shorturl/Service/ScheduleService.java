@@ -5,11 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.deevdenis.shorturl.Entity.ShortUrl;
-import ru.deevdenis.shorturl.Repository.ShortUrlDTO;
-
-import java.time.Instant;
-import java.util.List;
+import ru.deevdenis.shorturl.Repository.ShortUrlRepo;
 
 @Service
 @Transactional
@@ -17,15 +13,15 @@ import java.util.List;
 public class ScheduleService {
 
     @Autowired
-    private ShortUrlDTO template;
+    private ShortUrlRepo template;
 
     @Scheduled(cron = "0/6 * * * * *")
     public void checkTimeExpired() {
-        List<ShortUrl> listByTimeExpiredBefore = template.findByTimeExpiredBefore(Instant.now());
-        template.deleteAll(listByTimeExpiredBefore);
-        for (ShortUrl shortUrl : listByTimeExpiredBefore) {
-            log.info(String.format("Message has been auto deleted when time expired: %s", shortUrl));
-        }
+        //List<ShortUrl> listByTimeExpiredBefore = template.findByTimeExpiredBefore(Instant.now());
+        //template.deleteAll(listByTimeExpiredBefore);
+        //for (ShortUrl shortUrl : listByTimeExpiredBefore) {
+        //    log.info(String.format("Message has been auto deleted when time expired: %s", shortUrl));
+        //}
 
     }
 }

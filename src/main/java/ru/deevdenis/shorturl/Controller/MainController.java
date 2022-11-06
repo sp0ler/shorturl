@@ -12,14 +12,14 @@ public class MainController {
     @Autowired
     private ShortUrlService shortUrlService;
 
-    public static final String FETCH = "/api/fetch/{short_url}/{time_expired}";
+    public static final String FETCH = "/api/fetch/{short_url}";
     public static final String SAVE = "/api/save/{time_expired}";
 
     @PostMapping(SAVE)
     @ResponseBody
     public ResponseEntity<ShortUrl> save(
             @RequestBody ShortUrl message,
-            @PathVariable("time_expired") long timeExpired) {
+            @PathVariable("time_expired") Long timeExpired) {
         return ResponseEntity.ok(shortUrlService.save(message, timeExpired));
     }
 

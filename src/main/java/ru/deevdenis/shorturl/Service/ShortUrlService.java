@@ -3,11 +3,10 @@ package ru.deevdenis.shorturl.Service;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.deevdenis.shorturl.Entity.ShortUrl;
-import ru.deevdenis.shorturl.Repository.ShortUrlDTO;
+import ru.deevdenis.shorturl.Repository.ShortUrlRepo;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -17,12 +16,17 @@ import java.util.UUID;
 @Log4j2
 public class ShortUrlService {
     @Autowired
-    private ShortUrlDTO template;
+    private ShortUrlRepo template;
 
     public ShortUrl save(@NonNull ShortUrl message, Long timeExpired) {
-
         ShortUrl newMessage = ShortUrl.builder()
-                .id(message.getId())
+                .id(
+                    String.format(
+                            "%s%s",
+                            UUID.randomUUID().toString().substring(0, 5),
+                            Instant.now().toString().substring(15, 25)
+                    ).replace(":", "").replace(".", "")
+                )
                 .text(message.getText())
                 .shortUrl(UUID.randomUUID().toString().substring(0, 15).replace("-", ""))
                 .timeRegistration(Instant.now())
