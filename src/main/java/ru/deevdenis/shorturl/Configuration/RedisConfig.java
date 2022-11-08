@@ -1,21 +1,20 @@
 package ru.deevdenis.shorturl.Configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import ru.deevdenis.shorturl.Entity.ShortUrl;
+
 
 @Configuration
-@EnableRedisRepositories
 @EnableScheduling
-public class RedisConfig {
+public class RedisConfig extends CachingConfigurerSupport {
 
     @Value("${redis.host}")
     private String IP_ADDRESS;
@@ -44,6 +43,4 @@ public class RedisConfig {
         template.afterPropertiesSet();
         return template;
     }
-
-
 }

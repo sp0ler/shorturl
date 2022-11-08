@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.deevdenis.shorturl.Entity.ShortUrl;
-import ru.deevdenis.shorturl.Repository.ShortUrlRepo;
+import ru.deevdenis.shorturl.Repository.RedisRepository;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -16,9 +17,9 @@ import java.util.UUID;
 @Log4j2
 public class ShortUrlService {
     @Autowired
-    private ShortUrlRepo template;
+    private RedisRepository template;
 
-    public ShortUrl save(@NonNull ShortUrl message, Long timeExpired) {
+    public ShortUrl save(@NonNull ShortUrl message, @NonNull Long timeExpired) {
         ShortUrl newMessage = ShortUrl.builder()
                 .id(
                     String.format(
@@ -30,20 +31,31 @@ public class ShortUrlService {
                 .text(message.getText())
                 .shortUrl(UUID.randomUUID().toString().substring(0, 15).replace("-", ""))
                 .timeRegistration(Instant.now())
-                .timeExpired(timeExpired == null ? null : Instant.now().plusMillis(timeExpired))
+                .timeExpired(Instant.now().plusMillis(timeExpired))
                 .role(message.getRole())
+                .ttl(timeExpired)
                 .build();
 
         template.save(newMessage);
-        log.info(String.format("Added to BD: %s", newMessage));
+        log.info("Added to BD: {}", newMessage);
 
         return newMessage;
     }
 
     public ShortUrl fetch(@NonNull String shortUrl) {
         ShortUrl message =  template.findByShortUrl(shortUrl);
-        log.info(String.format("Find into BD: %s", message));
+        log.info("Find into BD: {}", message);
 
         return message;
+    }
+
+    public List<ShortUrl> findLastTenPublic() {
+        log.info("Find last 10 public into BD");
+        return template.findLastTenPublic();
+    }
+
+    public void delete(String id) {
+        template.deleteById(id);
+        log.info("Deleted {}", id);
     }
 }
