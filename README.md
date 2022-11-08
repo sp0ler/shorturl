@@ -36,3 +36,6 @@ API:
 ```
 3. POST: "/api/fetch/last_public" - выведится список последних 10 JSON с ролью public
 4. DELETE: "/api/delete/{short_url}" - удалит JSON и вернет HttpStatus.GONE
+
+### Стек технолгиий: ###
+> Java 11, Lombok, Redis
