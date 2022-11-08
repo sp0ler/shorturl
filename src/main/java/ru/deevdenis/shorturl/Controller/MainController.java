@@ -18,7 +18,7 @@ public class MainController {
     public static final String FETCH = "/api/fetch/{short_url}";
     public static final String SAVE = "/api/save/{time_expired}";
     public static final String FETCH_LAST_TEN_PUBLIC = "/api/fetch/last_public";
-    private static final String DELETE = "/api/delete/{id}";
+    private static final String DELETE = "/api/delete/{short_url}";
 
     @PostMapping(SAVE)
     @ResponseBody
@@ -41,8 +41,8 @@ public class MainController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<?> delete(@PathVariable String id) {
-        shortUrlService.delete(id);
+    public ResponseEntity<?> delete(@PathVariable("short_url") String shortUrl) {
+        shortUrlService.delete(shortUrl);
         return ResponseEntity.status(HttpStatus.GONE).build();
     }
 }

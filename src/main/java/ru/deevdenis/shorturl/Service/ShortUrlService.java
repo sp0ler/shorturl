@@ -29,7 +29,6 @@ public class ShortUrlService {
                     ).replace(":", "").replace(".", "")
                 )
                 .text(message.getText())
-                .shortUrl(UUID.randomUUID().toString().substring(0, 15).replace("-", ""))
                 .timeRegistration(Instant.now())
                 .timeExpired(Instant.now().plusMillis(timeExpired))
                 .role(message.getRole())
