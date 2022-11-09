@@ -3,14 +3,11 @@ package ru.deevdenis.shorturl.Entity;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.lang.Nullable;
 
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.concurrent.TimeUnit;
-
 
 @Data
 @Builder

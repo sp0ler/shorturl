@@ -18,7 +18,7 @@ public class MainController {
     public static final String FETCH = "/api/fetch/{short_url}";
     public static final String SAVE = "/api/save/{time_expired}";
     public static final String FETCH_LAST_TEN_PUBLIC = "/api/fetch/last_public";
-    private static final String DELETE = "/api/delete/{short_url}";
+    public static final String DELETE = "/api/delete/{short_url}";
 
     @PostMapping(SAVE)
     @ResponseBody
