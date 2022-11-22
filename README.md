@@ -38,4 +38,4 @@ API:
 4. DELETE: "/api/delete/{short_url}" - удалит JSON и вернет HttpStatus.GONE
 
 ### Стек технолгиий: ###
-> Java 11, Lombok, Redis
+> Java 11, Lombok, Redis, Spring
